@@ -1,172 +1,102 @@
-<div id="add" style="margin: 0px auto; width: 500px;padding: 50px;">
-
-    <div style="margin: 0px auto; width: 500px;padding: 80px;">
-
-        <ul class="nav nav-tabs" role="tablist">
+<!DOCTYPE html>
+<html>
+   <head>
+      <title></title>
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+      <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+      <style type="text/css">
+         p{
+         color: red;
+         }
+         h5{
+         color: green;
+         }
+      </style>
+   </head>
+<body>
+<div style="margin: 0px auto; width: 500px;padding: 50px;">
+         <!-- Nav tabs -->
+         <ul class="nav nav-tabs" role="tablist">
             <li class="nav-item">
-                <a class="nav-link active" data-toggle="tab" href="#addDoc" role="tab">Add Doctor</a>
+               <a class="nav-link active" data-toggle="tab" href="#home" role="tab">Add Doctor</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#removeDoc" role="tab">Remove Doctor</a>
+               <a class="nav-link" data-toggle="tab" href="#profile" role="tab">Remove Doctor</a>
             </li>
-        </ul>
-        <br>
+         </ul>
+         <!-- Tab panes -->
+         <div class="tab-content">
+            <div class="tab-pane active" id="profile" role="tabpanel">
+              
+             <!--  -->
+               <form action="" method="post">
+                  <div class="form-group">
+                     <label for="fistname">First Name:</label>
+                     <input type="text" class="form-control" name="firstname" placeholder="Write your First Name">
+                  </div>
 
-        <div class="tab-content">
-            <div class="tab-pane active" id="addDoc" role="tabpanel">
+                  <div class="form-group">
+                     <label for="fistname">Last Name:</label>
+                     <input type="text" class="form-control" name="firstname" placeholder="Write your First Name">
+                  </div>
 
-                <?php include('dbconnect.php');
-        if (isset($_POST['submit'])) {
+                <div class="form-group">
+                     <label for="degree">Degree</label>
+                     <textarea></textarea>
+                  </div>
 
-            @$Specialist =strip_tags($_POST['Specialist']);
-            $Off_Day=strip_tags($_POST['offday']);
-            $doctorName=strip_tags($_POST['doctorName']);
-            $degree=strip_tags($_POST['degree']);
-            $email=strip_tags($_POST['email']);
-            $visitingHour=strip_tags($_POST['visitingHour']);
-            $contactNumber=strip_tags($_POST['contactNumber']);
-            $visitingFee=strip_tags($_POST['visitingFee']);
-            $HospitalId=$userRow['HospitalId'];
-            $Specialist=$DBcon->real_escape_string($Specialist);
-            $Off_Day=$DBcon->real_escape_string($Off_Day);
-            $doctorName=$DBcon->real_escape_string($doctorName);
-            $degree=$DBcon->real_escape_string($degree);
-            $email=$DBcon->real_escape_string($email);
-            $visitingHour=$DBcon->real_escape_string($visitingHour);
-            $contactNumber=$DBcon->real_escape_string($contactNumber);
-            $visitingFee=$DBcon->real_escape_string($visitingFee);
-            
-            $check_email=$DBcon->query("SELECT Email FROM doctor WHERE Email='$email'");
-            $count=$check_email->num_rows;
-            
-            if($Specialist) {
-                if ($count==0) {
-                    echo $Off_Day;
-                    $query="INSERT INTO doctor(DoctorName,Degree,Visiting_Hour,Email,Contact_Number,Fee,Hospital_HospitalId,Specialist,Off_Day) VALUES('$doctorName','$degree','$visitingHour','$email','$contactNumber','$visitingFee','$HospitalId','$Specialist','$Off_Day')";
-                    if ($DBcon->query($query)) {
-                        $msg="<div class='alert alert-success'>
-        <span class='glyphicon glyphicon-info-sign'></span>&nbsp;
-                        successfully registered ! </div>";
+                  <div class="form-group">
+                     <label for="email">Email:</label>
+                     <input type="text" class="form-control" name="email" placeholder="">
+                  </div>
 
-                    }
-                    else {
-                        $msg="<div class='alert alert-danger'>
-        <span class='glyphicon glyphicon-info-sign'></span>&nbsp;
-                        error while registering ! </div>";
+                  <div class="form-group">
+                     <label for="password">Password:</label>
+                     <input type="password" class="form-control" name="password">
+                  </div>
 
-                    }
-                }
-                else {
-                    $msg="<div class='form-group alert alert-danger'>
-        <span class='glyphicon glyphicon-info-sign'></span>&nbsp;
-                    sorry email already taken ! </div>";
+                  <div class="form-group">
+                     <label for="movile">Contact:</label>
+                     <input type="text" class="form-control" name="mobile" placeholder="Mobile Number">
+                  </div>
 
-                }
-            }
-            else {
-                $msg="<div class='alert alert-danger'>
-        <span class='glyphicon glyphicon-info-sign'></span>&nbsp;
-                Please select the Specialisty ! ! ! </div>";
-
-            }
-            $DBcon->close();
-        }
-
-?>
-
-                <form action="" method="post">
-                    <?php if(isset($msg)) {
-                     echo $msg;
-                    }
-
-             ?>
-                    <div class="form-group">
-                        <label for="fistname" class="label label-info">Doctor Name</label>
-                        <input type="text" required="" class="form-control" name="doctorName">
-                    </div>
-                    <div class="form-group">
-                        <label for="degree" class="label label-info">Degree</label>
-                        <textarea class="form-control" id="exampleTextarea" rows="3" name="degree" required=""></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="visitingHour" class="label label-info">Visiting Hour</label>
-                        <input type="text" required="" class="form-control" name="visitingHour" placeholder="">
-                    </div>
-                    <div class="form-group">
-                        <label for="email" class="label label-info">Email</label>
-                        <input type="text" required="" class="form-control" name="email" placeholder="">
-                    </div>
-                    <div class="form-group">
-                        <label for="contactNumber" class="label label-info">Contact Number:</label>
-                        <input type="text" required="" class="form-control" name="contactNumber" placeholder="">
-                    </div>
-                    <!--<div class="form-group">
-                                    <label for="image">Picture:</label>
-                                    <input type="file" name="image" class="form-control-file" id="exampleInputFile" aria-describedby="fileHelp">
-                        </div>-->
-                    <div class="form-group">
-                        <label for="visitingFee" class="label label-info">Visiting Fee</label>
-                        <input type="text" required="" class="form-control" name="visitingFee" placeholder="">
-                    </div>
-                    <div class="form-group">
-                        <label for="offday" class="label label-info">Off Day</label>
-                        <input type="text" required="" class="form-control" name="offday" placeholder="">
-                    </div>
-                    <div class="form-group ">
-                        <label for="Specialist" class="label label-info">Specialist</label>
-                           <label for="username" id="usernameError" class="label label-warning"></label>
-                            <div class="radio">
-                                <label>
-                                    <input type="radio" name="Specialist" value="Cancer">Cancer Specialist</label>
-                            </div>
-                            <div class="radio">
-                                <label>
-                                    <input type="radio" name="Specialist" value="Child">Child Specialist</label>
-                            </div>
-                            <div class="radio">
-                                <label>
-                                    <input type="radio" name="Specialist" value="Dental">Denatl Specialist</label>
-                            </div>
-                            <div class="radio">
-                                <label>
-                                    <input type="radio" name="Specialist" value="Eye">Eye Specialist</label>
-                            </div>
-                            <div class="radio">
-                                <label>
-                                    <input type="radio" name="Specialist" value="Heart">Heart Specialist</label>
-                            </div>
-                            <div class="radio">
-                                <label>
-                                    <input type="radio" name="Specialist" value="Kidney">Kidney Specialist</label>
-                            </div>
-                            <div class="radio">
-                                <label>
-                                    <input type="radio" name="Specialist" value="Surgery">Surgery Specialist</label>
-                            </div>
-                            <div class="radio">
-                                <label>
-                                    <input type="radio" name="Specialist" value="Medicine">Medicine Specialist</label>
-                            </div>
-                            <div class="radio">
-                                <label>
-                                    <input type="radio" name="Specialist" value="ENT">Ent Specialist</label>
-                            </div>
-                    </div>
-                    <button type="reset" class="btn btn-secondary">Reset</button>
-                    <button type="submit" name="submit" class="btn btn-primary">Submit</button>
-                </form>
+                  <div class="radio">
+                     <label>Sex:</label>
+                     <label class="radio-inline"><input type="radio" name="sex" value="Male">Male</label>
+                     <label class="radio-inline"><input type="radio" name="sex" value="Female">Female</label>
+                  </div>
+                  <div class="form-group">
+                     <label for="example-date-input">Date of Birth:</label>
+                     <input class="form-control" type="date" value="" id="example-date-input">
+                  </div>
+             
+                  <div class="form-group">
+                     <label for="exampleInputFile">Picture:</label>
+                     <input type="file" class="form-control-file" id="exampleInputFile" aria-describedby="fileHelp">
+                  </div>
+                
+                  <div class="form-group">
+                     <label for="exampleTextarea">Address:</label>
+                     <textarea class="form-control" id="exampleTextarea" rows="3"></textarea>
+                  </div>
+                  <button type="reset" class="btn btn-secondary">Reset</button>
+                  <button type="submit" class="btn btn-primary">Submit</button>
+               </form>
             </div>
-            
-            <div class="tab-pane" id="removeDoc" role="tabpanel">
-                <form>
-                    <div class="form-group">
-                        <label for="docid">Email:</label>
-                        <input type="text" class="form-control" name="patientid" placeholder="Patient Id">
-                    </div>
-                    <button type="reset" class="btn btn-secondary">Reset</button>
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </form>
+
+            <div class="tab-pane" id="profile" role="tabpanel">
+               <form>
+                  <div class="form-group">
+                     <label for="docid">Email:</label>
+                     <input type="text" class="form-control" name="patientid" placeholder="Patient Id">
+                  </div>
+                  <button type="reset" class="btn btn-secondary">Reset</button>
+                  <button type="submit" class="btn btn-primary">Submit</button>
+               </form>
             </div>
-        </div>
-    </div>
-</div>
+         </div>
+      </div>
+    </body>
+  </html>
